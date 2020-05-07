@@ -32,7 +32,7 @@ const followersArray = [`dannygipson95`, `tjason-clegg`, `iatechristmas`, `Vipps
 const entryPoint = document.querySelector('.cards')
 
 cardMaker = (attrs) => {
-  const { avatar_url, name, username, location, profile, html_url, followers, following, bio } = attrs
+  const { avatar_url, name, login, location, html_url, followers, following, bio } = attrs
 
   const card = document.createElement('div')
   const cardImage = document.createElement('img')
@@ -64,8 +64,8 @@ cardMaker = (attrs) => {
 
   cardImage.src = avatar_url
   cardTitle.textContent = name
-  cardUsername.textContent = `${username}`
-  cardProfile.textContent = profile
+  cardUsername.textContent = `${login}`
+  cardProfile.textContent = `Profile: `
   cardLocation.textContent = `Location: ${location}`
   cardProfile.url = `${html_url}`
   cardFollowers.textContent = `Followers: ${followers}`
@@ -74,6 +74,7 @@ cardMaker = (attrs) => {
   cardLink.href = html_url
   cardLink.textContent = html_url
 
+
   cardProfile.appendChild(cardLink)
   return card
 }
@@ -81,6 +82,7 @@ cardMaker = (attrs) => {
 const getUser = (username) => {
   axios.get(`https://api.github.com/users/${username}`)
     .then(response => {
+      console.log(response.data)
       const user = cardMaker(response.data)
       entryPoint.appendChild(user)
     })
